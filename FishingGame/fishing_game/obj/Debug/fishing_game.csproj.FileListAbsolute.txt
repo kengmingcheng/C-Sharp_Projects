@@ -1,0 +1,7 @@
+C:\Users\qw223\Projects\C#\fishing_game\fishing_game\bin\Debug\fishing_game.exe.config
+C:\Users\qw223\Projects\C#\fishing_game\fishing_game\bin\Debug\fishing_game.exe
+C:\Users\qw223\Projects\C#\fishing_game\fishing_game\bin\Debug\fishing_game.pdb
+C:\Users\qw223\Projects\C#\fishing_game\fishing_game\obj\Debug\fishing_game.csprojAssemblyReference.cache
+C:\Users\qw223\Projects\C#\fishing_game\fishing_game\obj\Debug\fishing_game.csproj.CoreCompileInputs.cache
+C:\Users\qw223\Projects\C#\fishing_game\fishing_game\obj\Debug\fishing_game.exe
+C:\Users\qw223\Projects\C#\fishing_game\fishing_game\obj\Debug\fishing_game.pdb

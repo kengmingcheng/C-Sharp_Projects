@@ -1,0 +1,7 @@
+C:\Users\qw223\Projects\C#\FightingGame_KMC\FightingGame_KMC\bin\Debug\FightingGame_KMC.exe.config
+C:\Users\qw223\Projects\C#\FightingGame_KMC\FightingGame_KMC\bin\Debug\FightingGame_KMC.exe
+C:\Users\qw223\Projects\C#\FightingGame_KMC\FightingGame_KMC\bin\Debug\FightingGame_KMC.pdb
+C:\Users\qw223\Projects\C#\FightingGame_KMC\FightingGame_KMC\obj\Debug\FightingGame_KMC.csprojAssemblyReference.cache
+C:\Users\qw223\Projects\C#\FightingGame_KMC\FightingGame_KMC\obj\Debug\FightingGame_KMC.csproj.CoreCompileInputs.cache
+C:\Users\qw223\Projects\C#\FightingGame_KMC\FightingGame_KMC\obj\Debug\FightingGame_KMC.exe
+C:\Users\qw223\Projects\C#\FightingGame_KMC\FightingGame_KMC\obj\Debug\FightingGame_KMC.pdb
