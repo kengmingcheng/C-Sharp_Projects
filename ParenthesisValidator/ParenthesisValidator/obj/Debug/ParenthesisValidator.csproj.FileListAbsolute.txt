@@ -1,0 +1,15 @@
+C:\Users\qw223\Projects\C#\ParenthesisValidator\ParenthesisValidator\bin\Debug\ParenthesisValidator.exe.config
+C:\Users\qw223\Projects\C#\ParenthesisValidator\ParenthesisValidator\bin\Debug\ParenthesisValidator.exe
+C:\Users\qw223\Projects\C#\ParenthesisValidator\ParenthesisValidator\bin\Debug\ParenthesisValidator.pdb
+C:\Users\qw223\Projects\C#\ParenthesisValidator\ParenthesisValidator\obj\Debug\ParenthesisValidator.csprojAssemblyReference.cache
+C:\Users\qw223\Projects\C#\ParenthesisValidator\ParenthesisValidator\obj\Debug\MainWindow.g.cs
+C:\Users\qw223\Projects\C#\ParenthesisValidator\ParenthesisValidator\obj\Debug\App.g.cs
+C:\Users\qw223\Projects\C#\ParenthesisValidator\ParenthesisValidator\obj\Debug\ParenthesisValidator_MarkupCompile.cache
+C:\Users\qw223\Projects\C#\ParenthesisValidator\ParenthesisValidator\obj\Debug\ParenthesisValidator_MarkupCompile.lref
+C:\Users\qw223\Projects\C#\ParenthesisValidator\ParenthesisValidator\obj\Debug\MainWindow.baml
+C:\Users\qw223\Projects\C#\ParenthesisValidator\ParenthesisValidator\obj\Debug\ParenthesisValidator.g.resources
+C:\Users\qw223\Projects\C#\ParenthesisValidator\ParenthesisValidator\obj\Debug\ParenthesisValidator.Properties.Resources.resources
+C:\Users\qw223\Projects\C#\ParenthesisValidator\ParenthesisValidator\obj\Debug\ParenthesisValidator.csproj.GenerateResource.cache
+C:\Users\qw223\Projects\C#\ParenthesisValidator\ParenthesisValidator\obj\Debug\ParenthesisValidator.csproj.CoreCompileInputs.cache
+C:\Users\qw223\Projects\C#\ParenthesisValidator\ParenthesisValidator\obj\Debug\ParenthesisValidator.exe
+C:\Users\qw223\Projects\C#\ParenthesisValidator\ParenthesisValidator\obj\Debug\ParenthesisValidator.pdb

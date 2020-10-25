@@ -1,0 +1,24 @@
+﻿<Page x:Class="Plantville.LogIn"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Plantville"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="550"
+      Title="LogIn">
+
+    <Grid Background="#FFF9F9F9">
+        <Label x:Name="lbl_homeTitle" Content="Plantville" HorizontalAlignment="Left" Margin="22,124,0,0" VerticalAlignment="Top" Height="59" Width="174" FontSize="36" FontWeight="Bold"/>
+        <TextBox x:Name="txb_login" HorizontalAlignment="Left" Height="23" Margin="204,294,0,0" TextWrapping="Wrap" Text="User" VerticalAlignment="Top" Width="170"/>
+        <Button x:Name="btn_login" HorizontalAlignment="Left" Margin="415,293,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.355,0.343" Click="Btn_login_Click" Height="23" Content="Log In"/>
+        <Label x:Name="lbl_login" Content="Username: " HorizontalAlignment="Left" Margin="114,290,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbl_login1" Content="LOG IN" HorizontalAlignment="Left" Margin="121,188,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+        <Label x:Name="lbl_servers" Content="Servers:" HorizontalAlignment="Left" Margin="114,254,0,0" VerticalAlignment="Top"/>
+        <Grid x:Name="grid_servers" HorizontalAlignment="Left" Height="26" Margin="204,250,0,0" VerticalAlignment="Top" Width="170">
+            <RadioButton x:Name="rdb_heroku" Content="Heroku" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" IsChecked="True"/>
+            <RadioButton x:Name="rdb_custom" Content="Postman" HorizontalAlignment="Left" Margin="71,10,0,0" VerticalAlignment="Top"/>
+        </Grid>
+
+    </Grid>
+</Page>

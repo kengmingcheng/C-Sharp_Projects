@@ -1,0 +1,13 @@
+C:\Users\qw223\Projects\C#\GatesCandyStore_ChengKengMing\GatesCandyStore_ChengKengMing\bin\Debug\GatesCandyStore_ChengKengMing.exe.config
+C:\Users\qw223\Projects\C#\GatesCandyStore_ChengKengMing\GatesCandyStore_ChengKengMing\bin\Debug\GatesCandyStore_ChengKengMing.exe
+C:\Users\qw223\Projects\C#\GatesCandyStore_ChengKengMing\GatesCandyStore_ChengKengMing\bin\Debug\GatesCandyStore_ChengKengMing.pdb
+C:\Users\qw223\Projects\C#\GatesCandyStore_ChengKengMing\GatesCandyStore_ChengKengMing\obj\Debug\GatesCandyStore_ChengKengMing.csprojAssemblyReference.cache
+C:\Users\qw223\Projects\C#\GatesCandyStore_ChengKengMing\GatesCandyStore_ChengKengMing\obj\Debug\GatesCandyStore_ChengKengMing.StoreMain.resources
+C:\Users\qw223\Projects\C#\GatesCandyStore_ChengKengMing\GatesCandyStore_ChengKengMing\obj\Debug\GatesCandyStore_ChengKengMing.Properties.Resources.resources
+C:\Users\qw223\Projects\C#\GatesCandyStore_ChengKengMing\GatesCandyStore_ChengKengMing\obj\Debug\GatesCandyStore_ChengKengMing.csproj.GenerateResource.cache
+C:\Users\qw223\Projects\C#\GatesCandyStore_ChengKengMing\GatesCandyStore_ChengKengMing\obj\Debug\GatesCandyStore_ChengKengMing.csproj.CoreCompileInputs.cache
+C:\Users\qw223\Projects\C#\GatesCandyStore_ChengKengMing\GatesCandyStore_ChengKengMing\obj\Debug\GatesCandyStore_ChengKengMing.exe
+C:\Users\qw223\Projects\C#\GatesCandyStore_ChengKengMing\GatesCandyStore_ChengKengMing\obj\Debug\GatesCandyStore_ChengKengMing.pdb
+C:\Users\qw223\Projects\C#\GatesCandyStore_ChengKengMing\GatesCandyStore_ChengKengMing\obj\Debug\GatesCandyStore_ChengKengMing.chocolates.resources
+C:\Users\qw223\Projects\C#\GatesCandyStore_ChengKengMing\GatesCandyStore_ChengKengMing\obj\Debug\GatesCandyStore_ChengKengMing.lollipops.resources
+C:\Users\qw223\Projects\C#\GatesCandyStore_ChengKengMing\GatesCandyStore_ChengKengMing\obj\Debug\GatesCandyStore_ChengKengMing.marshmellos.resources

@@ -1,0 +1,58 @@
+﻿<Window x:Class="Plantville.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Plantville"
+        mc:Ignorable="d"
+        Title="Plantville" Height="500" Width="550">
+    <Grid x:Name="grid_Main">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="68*"/>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="189*"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="lbl_gold" Content="Gold: " HorizontalAlignment="Left" Margin="243.905,13,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.649,0.464" Grid.Column="2"/>
+        <Label x:Name="lbl_lands" Content="Land: " HorizontalAlignment="Left" Margin="244.905,44,0,0" VerticalAlignment="Top" Grid.Column="2"/>
+
+        <Label x:Name="lbl_title" Content="Label" HorizontalAlignment="Left" Margin="27,28,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold" Width="342" Grid.Column="1" Grid.ColumnSpan="2"/>
+
+        <Grid x:Name="grid_menu" HorizontalAlignment="Left" Height="270" Margin="20,84,0,0" VerticalAlignment="Top" Width="125" Grid.ColumnSpan="2">
+            <Button x:Name="btn_inventory" Content="Inventory" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="100" Click="Btn_inventory_Click"/>
+            <Button x:Name="btn_garden" Content="Garden" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Click="Btn_garden_Click"/>
+            <Button x:Name="btn_seedEmporium" Content="Seeds Emporium" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="100" Click="Btn_seedEmporium_Click"/>
+            <Button x:Name="btn_market1" Content="Trade Marketplace" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Width="100" Click="Btn_market1_Click"/>
+            <Button x:Name="btn_trade" Content="Propose Trade" HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Width="100" Click="Btn_trade_Click"/>
+            <Button x:Name="btn_chat" Content="Chat" HorizontalAlignment="Left" Margin="10,239,0,0" VerticalAlignment="Top" Width="100" Click="Btn_chat_Click"/>
+        </Grid>
+        <Button x:Name="btn_save" Content="Save" HorizontalAlignment="Left" Margin="29,382,0,0" VerticalAlignment="Top" Width="75" Click="Btn_save_Click"/>
+
+        <Grid x:Name="grid_listbox" HorizontalAlignment="Left" Height="356" Margin="23,94,0,0" VerticalAlignment="Top" Width="354" Grid.Column="1" Grid.ColumnSpan="2">
+            <ListBox x:Name="lbx_garden" HorizontalAlignment="Left" Height="250" Margin="3,0,0,0" VerticalAlignment="Top" Width="350" MouseDoubleClick="Lbx_garden_MouseDoubleClick"/>
+            <ListBox x:Name="lbx_seed" HorizontalAlignment="Left" Height="250" Margin="3,0,0,0" VerticalAlignment="Top" Width="350" MouseDoubleClick="Lbx_seed_MouseDoubleClick"/>
+            <ListBox x:Name="lbx_inventory" HorizontalAlignment="Left" Height="250" Margin="3,0,0,0" VerticalAlignment="Top" Width="350" MouseDoubleClick="Lbx_inventory_MouseDoubleClick"/>
+            <ListBox x:Name="lbx_market" HorizontalAlignment="Left" Height="250" Margin="3,0,0,0" VerticalAlignment="Top" Width="350" MouseDoubleClick="Lbx_market_MouseDoubleClick"/>
+            <ListBox x:Name="lbx_trade" HorizontalAlignment="Left" Height="250" Margin="3,0,0,0" VerticalAlignment="Top" Width="350" SelectionChanged="Lbx_trade_SelectionChanged"/>
+            <ListBox x:Name="lbx_chat" HorizontalAlignment="Left" Height="250" Margin="3,0,0,0" VerticalAlignment="Top" Width="350" SelectionChanged="Lbx_trade_SelectionChanged"/>
+            <Button x:Name="btn_harvest" Content="Harvest All" HorizontalAlignment="Left" Margin="269,276,0,0" VerticalAlignment="Top" Width="75" Click="Btn_harvest_Click" RenderTransformOrigin="0.5,0.5" Visibility="Hidden"/>
+            <Button x:Name="btn_market" Content="Go to Farmer's market" HorizontalAlignment="Left" Margin="10,276,0,0" VerticalAlignment="Top" Width="125" Click="Btn_market_Click" Visibility="Hidden"/>
+            <Button x:Name="btn_send" Content="Send" HorizontalAlignment="Left" Margin="269,323,0,0" VerticalAlignment="Top" Width="75" Click="Btn_send_Click"/>
+            <TextBox x:Name="txb_chat" HorizontalAlignment="Left" Height="23" Margin="0,323,0,0" TextWrapping="Wrap" Text="Hi!" VerticalAlignment="Top" Width="257"/>
+            <Label x:Name="lbl_user" Content="User:" HorizontalAlignment="Left" Margin="-53,320,0,0" VerticalAlignment="Top"/>
+
+            <Label x:Name="lbl_plant" Content="Plant: " HorizontalAlignment="Center" VerticalAlignment="Top" Margin="61,53,254,0" RenderTransformOrigin="0.035,0.634"/>
+            <Label x:Name="lbl_quantity" Content="Quantity: " HorizontalAlignment="Center" VerticalAlignment="Top" Margin="50,105,243,0" Width="61"/>
+            <Label x:Name="lbl_price" Content="Price: " HorizontalAlignment="Center" VerticalAlignment="Top" Margin="61,156,253,0" Width="40"/>
+            <ComboBox x:Name="cbb_plant" Width="120" RenderTransformOrigin="1.463,4.402" Margin="126,53,108,278" AllowDrop="True">
+                <ComboBoxItem IsSelected="True">strawberry</ComboBoxItem>
+                <ComboBoxItem>spinach</ComboBoxItem>
+                <ComboBoxItem>pear</ComboBoxItem>
+            </ComboBox>
+            <TextBox x:Name="txb_quantity" Height="23" TextWrapping="Wrap" Text="" Width="120" Margin="126,109,108,224"/>
+            <TextBox x:Name="txb_price" Height="23" TextWrapping="Wrap" Text="" Width="120" Margin="126,160,108,173"/>
+            <Button x:Name="btn_submit" Content="Submit" HorizontalAlignment="Left" Margin="171,202,0,0" VerticalAlignment="Top" Width="75" Click="Btn_submit_Click"/>
+        </Grid>
+
+
+    </Grid>
+</Window>
