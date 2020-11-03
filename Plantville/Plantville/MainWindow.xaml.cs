@@ -23,9 +23,20 @@ namespace Plantville
     /// </summary>
     public partial class MainWindow : NavigationWindow
     {
+        public static MainPage mainP;
+        private LogIn loginP;
+        public static string server;
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void NavigationWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (mainP != null)
+            {
+                mainP.saveData();
+            }
         }
     }
 }

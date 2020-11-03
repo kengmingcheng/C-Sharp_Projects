@@ -30,22 +30,36 @@ namespace Plantville
 
         private void Btn_login_Click(object sender, RoutedEventArgs e)
         {
-            user_name = txb_login.Text;
-
-            if (rdb_heroku.IsChecked == true){
-                server_url = "http://plantville.herokuapp.com/";
-            }
-            else if (rdb_custom.IsChecked == true)
+            if (txb_login.Text == null)
             {
-                server_url = "https://postman-echo.com/post";
+                MessageBox.Show("Please enter your name");
             }
-            MainPage mainP = new MainPage();
-            NavigationService.Navigate(mainP);
+            else
+            {
+                user_name = txb_login.Text;
+
+                if (rdb_heroku.IsChecked == true){
+                    server_url = "http://plantville.herokuapp.com/";
+                    MainWindow.server = "http://plantville.herokuapp.com/";
+                }
+                else if (rdb_custom.IsChecked == true)
+                {
+                    server_url = "http://localhost:8080/plantville/api/";
+                    MainWindow.server = "http://localhost:8080/plantville/api/";
+                }
+                MainWindow.mainP = new MainPage();
+                NavigationService.Navigate(MainWindow.mainP);
+            }
         }
 
         public static string getUName()
         {
             return user_name;
+        }
+
+        public static string getUrl()
+        {
+            return server_url;
         }
     }
 }

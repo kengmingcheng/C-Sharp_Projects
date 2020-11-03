@@ -17,7 +17,7 @@
         <Label x:Name="lbl_servers" Content="Servers:" HorizontalAlignment="Left" Margin="114,254,0,0" VerticalAlignment="Top"/>
         <Grid x:Name="grid_servers" HorizontalAlignment="Left" Height="26" Margin="204,250,0,0" VerticalAlignment="Top" Width="170">
             <RadioButton x:Name="rdb_heroku" Content="Heroku" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" IsChecked="True"/>
-            <RadioButton x:Name="rdb_custom" Content="Postman" HorizontalAlignment="Left" Margin="71,10,0,0" VerticalAlignment="Top"/>
+            <RadioButton x:Name="rdb_custom" Content="Wahaha" HorizontalAlignment="Left" Margin="71,10,0,0" VerticalAlignment="Top"/>
         </Grid>
 
     </Grid>

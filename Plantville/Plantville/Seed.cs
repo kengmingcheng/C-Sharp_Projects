@@ -25,5 +25,10 @@ namespace Plantville
         {
             return harvestTime;
         }
+
+        public override string ToString()
+        {
+            return name + ", $" + purchasePrice + ", " + harvestTime.ToString(@"mm\mss\s") + " to harvest";
+        }
     }
 }

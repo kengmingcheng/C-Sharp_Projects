@@ -36,3 +36,24 @@ C:\Users\qw223\Projects\C#\Final Project\Plantville\Plantville\obj\Debug\Plantvi
 C:\Users\qw223\Projects\C#\Final Project\Plantville\Plantville\obj\Debug\Plantville.pdb
 C:\Users\qw223\Projects\C#\Final Project\Plantville\Plantville\obj\Debug\MainPage.g.cs
 C:\Users\qw223\Projects\C#\Final Project\Plantville\Plantville\obj\Debug\MainPage.baml
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\bin\Debug\Plantville.exe.config
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\bin\Debug\Plantville.exe
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\bin\Debug\Plantville.pdb
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\bin\Debug\Newtonsoft.Json.dll
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\obj\Debug\Plantville.csprojAssemblyReference.cache
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\obj\Debug\LogIn.g.cs
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\obj\Debug\MainPage.g.cs
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\obj\Debug\MainWindow.g.cs
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\obj\Debug\App.g.cs
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\obj\Debug\Plantville_MarkupCompile.cache
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\obj\Debug\Plantville_MarkupCompile.lref
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\obj\Debug\LogIn.baml
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\obj\Debug\MainPage.baml
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\obj\Debug\MainWindow.baml
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\obj\Debug\Plantville.g.resources
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\obj\Debug\Plantville.Properties.Resources.resources
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\obj\Debug\Plantville.csproj.GenerateResource.cache
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\obj\Debug\Plantville.csproj.CoreCompileInputs.cache
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\obj\Debug\Plantville.csproj.CopyComplete
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\obj\Debug\Plantville.exe
+C:\Users\qw223\Projects\Github\C-Sharp_Projects\Plantville\Plantville\obj\Debug\Plantville.pdb

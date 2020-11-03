@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -27,62 +28,72 @@ namespace Plantville
         private Dictionary<string, object> dict;
         private string savedFile;
         protected Player player;
-        public int money = 100;
-        public int land_plot = 15;
         private bool booth = false; // Does player already set up a booth
 
         private string url;
 
-        List<Plant> garden = new List<Plant>();
         List<Plant> inventory = new List<Plant>();
         Dictionary<string, int[]> invent_dict = new Dictionary<string, int[]>();
         Dictionary<string, string> chat;
         Dictionary<string, string> trade;
+        private int chatPk = -1;
 
         public List<Seed> seed_inventory = new List<Seed>()
         {
-            new Seed("Strawberry", 2, 8, new TimeSpan(0, 0, 30)),
-            new Seed("Spinach", 5, 21, new TimeSpan(0, 1, 0)),
-            new Seed("Pear", 2, 20, new TimeSpan(0, 3, 0))
+            new Seed("strawberry", 2, 8, new TimeSpan(0, 0, 30)),
+            new Seed("spinach", 5, 21, new TimeSpan(0, 1, 0)),
+            new Seed("pear", 2, 20, new TimeSpan(0, 3, 0))
         };
         public MainPage()
         {
             InitializeComponent();
-            lbl_user.Content = LogIn.getUName() + " :";
-            
+            // get server url
+            url = LogIn.getUrl();
+
             grid_listbox.Children.Clear();
             grid_listbox.Children.Add(lbx_chat);
             grid_listbox.Children.Add(btn_send);
             grid_listbox.Children.Add(txb_chat);
             grid_listbox.Children.Add(lbl_user);
+            // upate chat history
+            updateChat();
 
-            
+            player = new Player(LogIn.getUName(), 100);
+            lbl_user.Content = LogIn.getUName() + " :";
+            // load init data
+            load_save();
+            updateSeedList();
+        }
 
-            Dictionary<string, object> dict;
-            if (System.IO.File.Exists(@"save.txt"))
+        private async void load_save()
+        {
+            // Load save from local
+            if (url.Contains("herokuapp"))
             {
-                using (var reader = new StreamReader(@"save.txt"))
+                if (System.IO.File.Exists(@"save.txt"))
                 {
-                    while (!reader.EndOfStream)
+                    using (var reader = new StreamReader(@"save.txt"))
                     {
-                        var text_data = reader.ReadLine();
-                        var data = JsonConvert.DeserializeObject<Dictionary<string, object>>(text_data);
+                        while (!reader.EndOfStream)
+                        {
+                            var text_data = reader.ReadLine();
+                            Console.WriteLine(text_data);
+                            var data = JsonConvert.DeserializeObject<Dictionary<string, object>>(text_data);
 
-                        garden = JsonConvert.DeserializeObject<List<Plant>>(data["garden"].ToString());
-                        invent_dict = JsonConvert.DeserializeObject<Dictionary<string, int[]>>(data["inventory"].ToString());
-                        money = Convert.ToInt32(data["money"]);
-                        //land_plot = Convert.ToInt32(data["land"]);
+                            player.garden = JsonConvert.DeserializeObject<List<Plant>>(data["garden"].ToString());
+                            invent_dict = JsonConvert.DeserializeObject<Dictionary<string, int[]>>(data["inventory"].ToString());
+                            player.gold = Convert.ToInt32(data["money"]);
+                        }
                     }
                 }
             }
-            player = new Player(LogIn.getUName(), 100);
-            lbl_gold.Content = "Gold: $" + money;
-            lbl_lands.Content = "Land:  " + land_plot;
-
-            updateSeedList();
-            // upate chat history
-            ChatAsync();
-            TradesAsync();
+            // Load save from server
+            else if (url.Contains("plantville/api"))
+            {
+                await saveAsync();
+            }
+            lbl_gold.Content = "Gold: $" + player.gold;
+            lbl_lands.Content = "Land:  " + player.getLand();
         }
 
         // POST
@@ -90,7 +101,7 @@ namespace Plantville
         {
             HttpClient client = new HttpClient();
             // parameters for POSTing data to url
-            string post_url = "http://plantville.herokuapp.com/";
+            string post_url = url;
             Dictionary<string, object> chatUpload = chatPost;
 
             var user = new FormUrlEncodedContent(new[]
@@ -110,7 +121,7 @@ namespace Plantville
         {
             HttpClient client = new HttpClient();
             // parameters for POSTing data to url
-            string post_url = "http://plantville.herokuapp.com/trades";
+            string post_url = url + "trades";
             Dictionary<string, object> tradeUpload = tradePost;
             var user = new FormUrlEncodedContent(new[]
             {
@@ -131,8 +142,7 @@ namespace Plantville
         {
             HttpClient client = new HttpClient();
             // parameters for POSTing data to url
-            //string post_url = "https://postman-echo.com/post";
-            string post_url = "https://plantville.herokuapp.com/accept_trade";
+            string post_url = url + "accept_trade";
             Dictionary<string, object> acceptedTradeUpload = acceptedTrade;
             var user = new FormUrlEncodedContent(new[]
             {
@@ -145,32 +155,46 @@ namespace Plantville
 
             // Read response
             string json_data = await response.Content.ReadAsStringAsync();
-            MessageBox.Show(json_data);
-
         }
-
+        
+        private async Task savePostAsync(string save)
+        {
+            HttpClient client = new HttpClient();
+            string post_url = url + "save/" + player.name;
+            var user = new StringContent(save, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PostAsync(post_url, user);
+            string json_data = await response.Content.ReadAsStringAsync();
+        }
+        
         // upate chat history
         private async Task ChatAsync()
         {
-            lbx_chat.Items.Clear();
             HttpClient client = new HttpClient();
-            string url = "http://plantville.herokuapp.com/";
-            HttpResponseMessage response = await client.GetAsync(url);
+            string get_url = url;
+            HttpResponseMessage response = await client.GetAsync(get_url);
             if (response.IsSuccessStatusCode)
             {
                 // print JSON response
                 var jsonString = await response.Content.ReadAsStringAsync();
                 //Console.WriteLine(await response.Content.ReadAsStringAsync());
-
                 var chatData = JsonConvert.DeserializeObject<List<object>>(jsonString);
                 chatData.Reverse();
                 foreach (object data in chatData)
                 {
                     Dictionary<string, object> record = JsonConvert.DeserializeObject<Dictionary<string, object>>(data.ToString());
-                    chat = JsonConvert.DeserializeObject<Dictionary<string, string>>(record["fields"].ToString());
-                    lbx_chat.Items.Add(chat["username"] + " : " + chat["message"]);
+                    int pk = Convert.ToInt32(record["pk"]);
+                    if (pk <= chatPk)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        chat = JsonConvert.DeserializeObject<Dictionary<string, string>>(record["fields"].ToString());
+                        //lbx_chat.Items.Add(new Chat(Convert.ToInt32(record["pk"]), chat["username"], chat["message"]));
+                        lbx_chat.Items.Add(chat["username"] + " : " + chat["message"]);
+                        chatPk = pk;
+                    }
                 }
-                lbx_chat.ScrollIntoView(lbx_chat.Items[lbx_chat.Items.Count - 1]);
             }
         }
 
@@ -179,14 +203,13 @@ namespace Plantville
         {
             lbx_market.Items.Clear();
             HttpClient client = new HttpClient();
-            url = "http://plantville.herokuapp.com/trades";
-            HttpResponseMessage response = await client.GetAsync(url);
+            string get_url = url + "trades";
+            HttpResponseMessage response = await client.GetAsync(get_url);
             if (response.IsSuccessStatusCode)
             {
                 // print JSON response
                 var jsonString = await response.Content.ReadAsStringAsync();
                 //Console.WriteLine(await response.Content.ReadAsStringAsync());
-
                 var tradeData = JsonConvert.DeserializeObject<List<object>>(jsonString);
                 foreach (object data in tradeData)
                 {
@@ -194,23 +217,69 @@ namespace Plantville
                     trade = JsonConvert.DeserializeObject<Dictionary<string, string>>(record["fields"].ToString());
                     int id = Convert.ToInt32(record["pk"]);
                     bool state = trade["state"] == "open";
-                    float price = Convert.ToInt32(trade["price"]);
+                    int price = Convert.ToInt32(trade["price"]);
                     int quantity = Convert.ToInt32(trade["quantity"]);
                     lbx_market.Items.Add(new Trade(id, trade["author"], trade["accepted_by"], price, state, trade["plant"], quantity));
                 }
             }
         }
 
+        private async Task saveAsync()
+        {
+            HttpClient client = new HttpClient();
+            string get_url = url + "save/" + LogIn.getUName();
+            HttpResponseMessage response = await client.GetAsync(get_url);
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+                //Console.WriteLine(await response.Content.ReadAsStringAsync());
+                if (jsonString.ToString().Length > 0)
+                {
+                    var data = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonString);
+
+                    player.garden = JsonConvert.DeserializeObject<List<Plant>>(data["garden"].ToString());
+                    invent_dict = JsonConvert.DeserializeObject<Dictionary<string, int[]>>(data["inventory"].ToString());
+                    player.gold = Convert.ToInt32(data["money"]);
+                }
+            }
+        }
+
+        private async void updateChat()
+        {
+            try
+            {
+                bool scrollToBottom = true;
+                do
+                {
+                    await ChatAsync();
+                    if (scrollToBottom)
+                    {
+                        lbx_chat.ScrollIntoView(lbx_chat.Items[lbx_chat.Items.Count - 1]);
+                        scrollToBottom = false;
+                    }
+                } while ((grid_listbox.Children.Contains(btn_send)));
+            }
+            catch
+            {
+                Console.WriteLine("Some error occured!");
+            }
+        }
+
+        private async void updateTrade()
+        {
+            await TradesAsync();
+        }
+
         // update status
         private void update()
         {
-            lbl_gold.Content = "Gold: $" + money;
-            lbl_lands.Content = "Land:   " + land_plot;
+            lbl_gold.Content = "Gold: $" + player.gold;
+            lbl_lands.Content = "Land:   " + player.getLand();
             lbx_garden.Items.Clear();
-            if (garden.Count > 0)
+            if (player.garden.Count > 0)
             {
                 bool allHarvest = true;
-                foreach (Plant plant in garden)
+                foreach (Plant plant in player.garden)
                 {
                     lbx_garden.Items.Add(plant.type.name + " [" + plant.getHarvestTime() + "]");
                     allHarvest = allHarvest && plant.harvest();
@@ -222,11 +291,12 @@ namespace Plantville
             }
         }
 
+        // create a list of seeds
         private void updateSeedList()
         {
             foreach (Seed s in seed_inventory)
             {
-                lbx_seed.Items.Add(s.name);
+                lbx_seed.Items.Add(s);
             }
         }
 
@@ -237,7 +307,6 @@ namespace Plantville
             btn_harvest.Visibility = Visibility.Hidden;
             lbl_boothFee.Visibility = Visibility.Hidden;
         }
-        // create a list of seeds
 
         private void Btn_garden_Click(object sender, RoutedEventArgs e)
         {
@@ -248,9 +317,9 @@ namespace Plantville
             hideButton();
             bool allHarvest = true;
             lbx_garden.Items.Clear();
-            if (garden.Count > 0)
+            if (player.garden.Count > 0)
             {
-                foreach (Plant plant in garden)
+                foreach (Plant plant in player.garden)
                 {
                     lbx_garden.Items.Add(plant.type.name + " [" + plant.getHarvestTime() + "]");
                     allHarvest = allHarvest && plant.harvest();
@@ -262,7 +331,7 @@ namespace Plantville
             }
             else
             {
-                MessageBox.Show("No plants in garden");
+                lbx_garden.Items.Add("No plant in garden");
             }
         }
 
@@ -290,6 +359,10 @@ namespace Plantville
                 string item = entry.Key + " [" + entry.Value[0].ToString() + "] $" + entry.Value[1].ToString();
                 lbx_inventory.Items.Add(item);
             }
+            if (lbx_inventory.Items.Count == 0)
+            {
+                lbx_inventory.Items.Add("No fruit or vegetable harvested");
+            }
         }
 
         private void Lbx_trade_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -301,6 +374,8 @@ namespace Plantville
         {
             grid_listbox.Children.Clear();
             grid_listbox.Children.Add(lbx_market);
+            lbl_title.Content = "Market";
+            updateTrade();
         }
 
         private void Btn_trade_Click(object sender, RoutedEventArgs e)
@@ -313,6 +388,7 @@ namespace Plantville
             grid_listbox.Children.Add(txb_quantity);
             grid_listbox.Children.Add(txb_price);
             grid_listbox.Children.Add(btn_submit);
+            lbl_title.Content = "Trade";
         }
 
         private void Btn_chat_Click(object sender, RoutedEventArgs e)
@@ -322,13 +398,15 @@ namespace Plantville
             grid_listbox.Children.Add(btn_send);
             grid_listbox.Children.Add(txb_chat);
             grid_listbox.Children.Add(lbl_user);
+            lbl_title.Content = "Chatroom";
+            updateChat();
         }
 
         private void Lbx_garden_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (garden.Count() > 0)
+            if (player.garden.Count() > 0)
             {
-                Plant selectedPlant = garden[lbx_garden.SelectedIndex];
+                Plant selectedPlant = player.garden[lbx_garden.SelectedIndex];
                 if (selectedPlant.harvest())
                 {
                     //inventory.Add(selectedPlant);
@@ -340,9 +418,8 @@ namespace Plantville
                     {
                         invent_dict[selectedPlant.type.name] = new int[2] { 1, selectedPlant.type.sellingPrice };
                     }
-                    garden.RemoveAt(lbx_garden.SelectedIndex);
+                    player.garden.RemoveAt(lbx_garden.SelectedIndex);
                     lbx_garden.Items.Remove(lbx_garden.SelectedItem);
-                    land_plot += 1;
                 }
                 else if (selectedPlant.timeToHarvest > new TimeSpan(0, 0, 0))
                 {
@@ -351,9 +428,8 @@ namespace Plantville
                 else if (selectedPlant.timeToHarvest < new TimeSpan(0, -15, 0))
                 {
                     MessageBox.Show("The plant spoiled");
-                    garden.RemoveAt(lbx_garden.SelectedIndex);
+                    player.garden.RemoveAt(lbx_garden.SelectedIndex);
                     lbx_garden.Items.Remove(lbx_garden.SelectedItem);
-                    land_plot += 1;
                 }
             }
             update();
@@ -362,17 +438,16 @@ namespace Plantville
         private void Lbx_seed_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             // check if player has enough lands and gold to grow a plant.
-            if (garden.Count() < 15 && money >= seed_inventory[lbx_seed.SelectedIndex].purchasePrice)
+            if (player.garden.Count() < 15 && player.gold >= seed_inventory[lbx_seed.SelectedIndex].purchasePrice)
             {
-                garden.Add(new Plant(seed_inventory[lbx_seed.SelectedIndex]));
-                money -= seed_inventory[lbx_seed.SelectedIndex].purchasePrice;
-                land_plot -= 1;
+                player.garden.Add(new Plant(seed_inventory[lbx_seed.SelectedIndex]));
+                player.gold -= seed_inventory[lbx_seed.SelectedIndex].purchasePrice;
             }
-            else if (garden.Count() >= 15)
+            else if (player.garden.Count() >= 15)
             {
                 MessageBox.Show("You can only grow 15 plants at one time");
             }
-            else if (money < seed_inventory[lbx_seed.SelectedIndex].purchasePrice)
+            else if (player.gold < seed_inventory[lbx_seed.SelectedIndex].purchasePrice)
             {
                 MessageBox.Show("You don't have enought gold to purchase the item");
             }
@@ -383,7 +458,7 @@ namespace Plantville
         {
             if (booth && invent_dict.Count > 0)
             {
-                money += invent_dict.ElementAt(lbx_inventory.SelectedIndex).Value[0] * invent_dict.ElementAt(lbx_inventory.SelectedIndex).Value[1];
+                player.gold += invent_dict.ElementAt(lbx_inventory.SelectedIndex).Value[0] * invent_dict.ElementAt(lbx_inventory.SelectedIndex).Value[1];
                 invent_dict.Remove(invent_dict.ElementAt(lbx_inventory.SelectedIndex).Key);
                 lbx_inventory.Items.Remove(lbx_inventory.SelectedItem);
             }
@@ -398,19 +473,25 @@ namespace Plantville
         {
             Trade trade = (Trade)lbx_market.SelectedItem;
 
-            
-
-            Dictionary<string, object> acceptedTradeText = new Dictionary<string, object>()
-            {
-                {"trade_id", trade.id},
-                {"accepted_by", player.name },
-            };
-
             if (trade.state)
             {
-                trade.trade_item();
-                await acceptedPostAsync(acceptedTradeText);
-                await TradesAsync();
+                if (invent_dict[trade.plant][0] >= trade.quantity)
+                {
+                    Dictionary<string, object> acceptedTradeText = new Dictionary<string, object>()
+                    {
+                        {"trade_id", trade.id},
+                        {"accepted_by", player.name },
+                    };
+
+                    invent_dict[trade.plant][0] -= trade.quantity;
+                    player.gold += trade.price * trade.quantity;
+                    await acceptedPostAsync(acceptedTradeText);
+                    updateTrade();
+                }
+                else
+                {
+                    MessageBox.Show("You don't have enough fruit/vegetable in your inventory");
+                }
             }
             else
             {
@@ -424,9 +505,9 @@ namespace Plantville
             if (invent_dict.Count > 0)
             {
                 // check if player has enough gold to set a booth
-                if (money >= 10)
+                if (player.gold >= 10)
                 {
-                    money -= 10;
+                    player.gold -= 10;
                     booth = true;
                 }
                 else
@@ -440,13 +521,13 @@ namespace Plantville
                 MessageBox.Show("No product in inventory");
             }
 
-            lbl_gold.Content = "Gold: $ " + money;
+            lbl_gold.Content = "Gold: $ " + player.gold;
         }
 
         // harvest all plants
         private void Btn_harvest_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Plant plant in garden)
+            foreach (Plant plant in player.garden)
             {
                 if (invent_dict.ContainsKey(plant.type.name))
                 {
@@ -457,34 +538,31 @@ namespace Plantville
                     invent_dict[plant.type.name] = new int[2] { 1, plant.type.sellingPrice };
                 }
             }
-            garden.Clear();
+            player.garden.Clear();
             lbx_garden.Items.Clear();
-            land_plot = 15;
-            lbl_lands.Content = "Land:   " + land_plot;
+            lbl_lands.Content = "Land:   " + player.getLand();
         }
 
-        private void saveData()
+        public async void saveData()
         {
             // create dictionary of noteworthy variables. 
             var json = new Dictionary<string, object>()
             {
-                {"garden", garden},
+                {"garden", player.garden},
                 {"inventory", invent_dict },
-                {"money", money },
+                {"money", player.gold },
             };
             string serializedJson = JsonConvert.SerializeObject(json);
             //Console.WriteLine(serializedJson);
             File.WriteAllText(@"save.txt", serializedJson);
+            if (MainWindow.server.Contains("plantville/api"))
+            {
+                await savePostAsync(serializedJson);
+            }
         }
 
         private void Btn_save_Click(object sender, RoutedEventArgs e)
         {
-            saveData();
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            // Save game progress while closing window
             saveData();
         }
 
@@ -497,20 +575,18 @@ namespace Plantville
             };
             txb_chat.Text = "";
             await chatPostAsync(chatText);
-            await ChatAsync();
-            lbx_chat.ScrollIntoView(lbx_chat.Items[lbx_chat.Items.Count - 1]);
+            updateChat();
         }
 
         private async void Btn_submit_Click(object sender, RoutedEventArgs e)
         {
-            if (Int32.Parse(txb_quantity.Text) * Int32.Parse(txb_price.Text) > money)
+            int totalAmount = Int32.Parse(txb_quantity.Text) * Int32.Parse(txb_price.Text);
+            if (totalAmount > player.gold)
             {
-                MessageBox.Show("You don't have enough money");
+                MessageBox.Show("You don't have enough gold");
             }
             else
             {
-                //lbx_market.Items.Insert(0,"[open] " + player.name + " wants to buy " + txb_quantity.Text + " " + cbb_plant.Text + " for $" + txb_price.Text);
-
                 Dictionary<string, object> tradeText = new Dictionary<string, object>()
                 {
                     {"author", player.name},
@@ -518,11 +594,11 @@ namespace Plantville
                     {"plant", cbb_plant.Text},
                     {"quantity", txb_quantity.Text },
                 };
+                player.gold -= totalAmount;
                 txb_quantity.Text = "";
                 txb_price.Text = "";
-                string tradePost = JsonConvert.SerializeObject(tradeText);
                 await tradePostAsync(tradeText);
-                await TradesAsync();
+                updateTrade();
             }
         }
 

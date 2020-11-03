@@ -6,6 +6,6 @@
         xmlns:local="clr-namespace:Plantville"
         mc:Ignorable="d"
         Title="Plantville" Height="500" Width="550"
-        Source="LogIn.xaml" ShowsNavigationUI="False">
+        Source="LogIn.xaml" ShowsNavigationUI="False" Closing="NavigationWindow_Closing">
 
 </NavigationWindow>

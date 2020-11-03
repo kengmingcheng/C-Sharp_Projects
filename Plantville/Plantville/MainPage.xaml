@@ -44,7 +44,7 @@
             <Button x:Name="btn_market" Content="Go to Farmer's market" HorizontalAlignment="Left" Margin="10,276,0,0" VerticalAlignment="Top" Width="125" Click="Btn_market_Click" Visibility="Hidden"/>
             <Button x:Name="btn_send" Content="Send" HorizontalAlignment="Left" Margin="269,323,0,0" VerticalAlignment="Top" Width="75" Click="Btn_send_Click"/>
             <TextBox x:Name="txb_chat" HorizontalAlignment="Left" Height="23" Margin="0,323,0,0" TextWrapping="Wrap" Text="Hi!" VerticalAlignment="Top" Width="257"/>
-            <Label x:Name="lbl_user" Content="User:" HorizontalAlignment="Left" Margin="-56,320,0,0" VerticalAlignment="Top" Width="56" FontWeight="Bold"/>
+            <Label x:Name="lbl_user" Content="User:" HorizontalAlignment="Left" Margin="-137,320,0,0" VerticalAlignment="Top" Width="132" FontWeight="Bold" HorizontalContentAlignment="Right"/>
             <Label x:Name="lbl_boothFee" Content="$10 each trip to farmer's market" HorizontalAlignment="Left" Margin="155,273,0,0" VerticalAlignment="Top" Width="189" Visibility="Hidden"/>
 
             <Label x:Name="lbl_plant" Content="Plant: " HorizontalAlignment="Center" VerticalAlignment="Top" Margin="61,53,254,0" RenderTransformOrigin="0.035,0.634"/>
