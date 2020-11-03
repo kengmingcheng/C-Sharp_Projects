@@ -77,7 +77,6 @@ namespace Plantville
                         while (!reader.EndOfStream)
                         {
                             var text_data = reader.ReadLine();
-                            Console.WriteLine(text_data);
                             var data = JsonConvert.DeserializeObject<Dictionary<string, object>>(text_data);
 
                             player.garden = JsonConvert.DeserializeObject<List<Plant>>(data["garden"].ToString());
@@ -257,6 +256,7 @@ namespace Plantville
                         lbx_chat.ScrollIntoView(lbx_chat.Items[lbx_chat.Items.Count - 1]);
                         scrollToBottom = false;
                     }
+                    await Task.Delay(5000);
                 } while ((grid_listbox.Children.Contains(btn_send)));
             }
             catch
